@@ -43,6 +43,7 @@ std::map<std::string, Constant *> global_literals;
 
 // store temporary value
 Value *tmp_val = nullptr;
+
 std::vector<BasicBlock*> tmp_condbb_while;
 std::vector<BasicBlock *> tmp_falsebb_while;
 std::vector<BasicBlock *> tmp_truebb;
@@ -457,7 +458,6 @@ void IRBuilder::visit(SyntaxTree::BlockStmt &node) {
     this->scope.enter();
     for(auto stmt : node.body){
         stmt->accept(*this);
-        if(break_or_continue==true){
         if(dynamic_cast<SyntaxTree::BreakStmt*>(stmt.get())!=nullptr||dynamic_cast<SyntaxTree::ContinueStmt*>(stmt.get())!=nullptr||dynamic_cast<SyntaxTree::ReturnStmt*>(stmt.get())!=nullptr){//break,continue,return后面的语句不再编译
             break;
         }
